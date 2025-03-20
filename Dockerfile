@@ -28,4 +28,3 @@ COPY crontab.conf /crontab.conf
 RUN crontab -u certbot /crontab.conf
 
 ENTRYPOINT ["/entrypoint.sh"]
-
