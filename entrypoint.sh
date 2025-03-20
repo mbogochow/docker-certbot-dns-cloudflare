@@ -18,21 +18,26 @@ if [[ "${EMAIL}" == "" ]]; then
     exit 4
 fi
 
-# Check if DRY_RUN is set
 DRY_RUN_FLAG=""
 if [[ "${DRY_RUN}" == "1" ]]; then
     echo "DRY_RUN is set to 1. Will perform a dry run without saving certificates."
     DRY_RUN_FLAG="--dry-run"
 fi
 
+PROPAGATION_FLAG=""
+if [[ -n "${PROPAGATION}" ]]; then
+    echo "PROPAGATION is set to ${PROPAGATION}. Will use this value for DNS propagation wait time."
+    PROPAGATION_FLAG="--dns-cloudflare-propagation-seconds ${PROPAGATION}"
+fi
+
 echo "$(date) starting certbot scripts"
 
 run_as_user() {
     if [[ -n "$CERTBOT_USER" ]]; then
-        echo "running as default user certbot"
+        echo "Running as default user certbot"
         sudo -u $CERTBOT_USER "$@"
     else
-        echo "running as custom user $USER"
+        echo "Running as custom user $USER"
         "$@"
     fi
 }
@@ -68,7 +73,8 @@ run_as_user certbot certonly \
     -d ${DOMAIN} \
     --non-interactive \
     --agree-tos \
-    ${DRY_RUN_FLAG}
+    ${DRY_RUN_FLAG} \
+    ${PROPAGATION_FLAG}
 
 # Run renewal script
 echo "$(date) running renewal script"

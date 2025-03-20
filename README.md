@@ -18,6 +18,7 @@ services:
       - EMAIL=your_email@example.com                        # your Cloudflare email
       - DOMAIN=example.com,*.example.com                    # domains to create certificate for separate by commas
       - DRY_RUN=0                                           # set to 1 to perform a dry run without saving certificates
+      - PROPAGATION=60                                      # optional: seconds to wait for DNS propagation (default: not set)
     volumes:
       - ./certs:/certs                          # where the certs will be stored
       - ./letsencrypt:/etc/letsencrypt          # required by certbot

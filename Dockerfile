@@ -3,6 +3,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENV DRY_RUN=0
+ENV PROPAGATION=""
 
 RUN apk add busybox-openrc sudo
 
