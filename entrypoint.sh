@@ -30,7 +30,7 @@ if [[ -n "${PROPAGATION}" ]]; then
     PROPAGATION_FLAG="--dns-cloudflare-propagation-seconds ${PROPAGATION}"
 fi
 
-echo "$(date) starting certbot scripts"
+echo "Starting certbot scripts"
 
 run_as_user() {
     if [[ -n "$CERTBOT_USER" ]]; then
@@ -66,7 +66,7 @@ chmod 600 "$CREDENTIAL_FILE"
 [[ -n "$CERTBOT_USER" ]] && chown $CERTBOT_USER:$CERTBOT_USER "$CREDENTIAL_FILE"
 
 # Run certbot
-echo "$(date) running certbot"
+echo "Running certbot"
 run_as_user certbot certonly \
     --dns-cloudflare \
     --dns-cloudflare-credentials "$CREDENTIAL_FILE" \
@@ -77,9 +77,9 @@ run_as_user certbot certonly \
     ${PROPAGATION_FLAG}
 
 # Run renewal script
-echo "$(date) running renewal script"
+echo "Running renewal script"
 run_as_user /renew.sh
 
 # Run crond
-echo "$(date) running crond in forefront"
+echo "Running crond in forefront"
 run_as_user crond -l 2 -f
