@@ -2,6 +2,8 @@ FROM alpine:latest
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+ENV DRY_RUN=0
+
 RUN apk add busybox-openrc sudo
 
 #RUN echo https://dl-cdn.alpinelinux.org/alpine/edge/testing/ >> /etc/apk/repositories && apk update

@@ -18,6 +18,13 @@ if [[ "${EMAIL}" == "" ]]; then
 	exit 4
 fi
 
+# Check if DRY_RUN is set
+DRY_RUN_FLAG=""
+if [[ "${DRY_RUN}" == "1" ]]; then
+	echo "DRY_RUN is set to 1. Will perform a dry run without saving certificates."
+	DRY_RUN_FLAG="--dry-run"
+fi
+
 echo "$(date) starting certbot scripts"
 
 if [[ "$(whoami)" == "root" ]]; then
@@ -30,7 +37,7 @@ if [[ "$(whoami)" == "root" ]]; then
 	chmod 600 "$HOME_DIR/cloudflare.ini"
 	chown certbot:certbot "$HOME_DIR/cloudflare.ini"
 
-	sudo -u certbot certbot certonly --dns-cloudflare --dns-cloudflare-credentials "$HOME_DIR/cloudflare.ini" -d ${DOMAIN} --non-interactive --agree-tos -m ${EMAIL}
+	sudo -u certbot certbot certonly --dns-cloudflare --dns-cloudflare-credentials "$HOME_DIR/cloudflare.ini" -d ${DOMAIN} --non-interactive --agree-tos -m ${EMAIL} ${DRY_RUN_FLAG}
 else
 	cd ~
 	echo "running as custom user $USER, home $(pwd)"
@@ -38,7 +45,7 @@ else
 	echo "dns_cloudflare_api_token=${CLOUDFLARE_API_TOKEN}" > ~/cloudflare.ini
 	chmod 600 ~/cloudflare.ini
 
-	certbot certonly --dns-cloudflare --dns-cloudflare-credentials ~/cloudflare.ini -d ${DOMAIN} --non-interactive --agree-tos -m ${EMAIL}
+	certbot certonly --dns-cloudflare --dns-cloudflare-credentials ~/cloudflare.ini -d ${DOMAIN} --non-interactive --agree-tos -m ${EMAIL} ${DRY_RUN_FLAG}
 fi
 
 echo "$(date) running renewal script"

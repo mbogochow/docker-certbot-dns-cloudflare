@@ -2,7 +2,14 @@
 
 set -e
 
-certbot renew -q
+# Check if DRY_RUN is set
+DRY_RUN_FLAG=""
+if [[ "${DRY_RUN}" == "1" ]]; then
+	echo "DRY_RUN is set to 1. Will perform a dry run without saving certificates."
+	DRY_RUN_FLAG="--dry-run"
+fi
+
+certbot renew -q ${DRY_RUN_FLAG}
 
 # handle certs renaming
 
