@@ -73,6 +73,7 @@ run_as_user certbot certonly \
     -d ${DOMAIN} \
     --non-interactive \
     --agree-tos \
+    --expand \
     ${DRY_RUN_FLAG} \
     ${PROPAGATION_FLAG} \
     ${CERTBOT_ARGS}
