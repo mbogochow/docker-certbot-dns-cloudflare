@@ -74,7 +74,8 @@ run_as_user certbot certonly \
     --non-interactive \
     --agree-tos \
     ${DRY_RUN_FLAG} \
-    ${PROPAGATION_FLAG}
+    ${PROPAGATION_FLAG} \
+    ${CERTBOT_ARGS}
 
 # Run renewal script
 echo "Running renewal script"

@@ -4,6 +4,7 @@ RUN chmod +x /entrypoint.sh
 
 ENV DRY_RUN=0
 ENV PROPAGATION=""
+ENV CERTBOT_ARGS=""
 
 RUN apk add busybox-openrc sudo
 

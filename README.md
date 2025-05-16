@@ -19,6 +19,7 @@ services:
       - DOMAIN=example.com,*.example.com                    # domains to create certificate for separate by commas
       - DRY_RUN=0                                           # set to 1 to perform a dry run without saving certificates
       - PROPAGATION=60                                      # optional: seconds to wait for DNS propagation (default: not set)
+      - CERTBOT_ARGS=                                       # optional: additional arguments to pass to certbot on container launch (not on renew)
     volumes:
       - ./certs:/certs                          # where the certs will be stored
       - ./letsencrypt:/etc/letsencrypt          # required by certbot
